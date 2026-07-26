@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow — Daily Focus Board</title>
+  <meta name="description" content="A responsive, distraction-free task board for planning your day." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">◆</span>
+      <span class="brand-name">TaskFlow</span>
+    </div>
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#today" class="active">Today</a></li>
+        <li><a href="#board">Board</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="main-nav-list" aria-label="Toggle navigation menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="layout">
+
+    <aside class="sidebar" aria-label="Filters and progress">
+      <div class="progress-ring-wrap">
+        <svg class="progress-ring" viewBox="0 0 120 120" role="img" aria-labelledby="progressLabel">
+          <title id="progressLabel">Daily completion progress</title>
+          <circle class="ring-track" cx="60" cy="60" r="52" />
+          <circle class="ring-fill" id="ringFill" cx="60" cy="60" r="52" />
+        </svg>
+        <div class="progress-text">
+          <span id="progressPercent">0%</span>
+          <small>done today</small>
+        </div>
+      </div>
+
+      <h2 class="sidebar-title">Filter</h2>
+      <div class="filter-group" role="group" aria-label="Task filters">
+        <button class="filter-btn active" data-filter="all">All tasks</button>
+        <button class="filter-btn" data-filter="active">In progress</button>
+        <button class="filter-btn" data-filter="done">Completed</button>
+      </div>
+    </aside>
+
+    <section class="board" id="today" aria-label="Today's tasks">
+      <article class="board-header">
+        <h1>Today's Focus</h1>
+        <p class="subtitle">Three things done well beats ten things half-finished.</p>
+      </article>
+
+      <form class="add-task-form" id="addTaskForm">
+        <label for="taskInput" class="visually-hidden">Add a new task</label>
+        <input type="text" id="taskInput" placeholder="What are you working on?" autocomplete="off" required />
+        <button type="submit">Add task</button>
+      </form>
+
+      <ul class="task-list" id="taskList" aria-live="polite">
+        <!-- Task items are rendered here by script.js -->
+      </ul>
+
+      <p class="empty-state" id="emptyState" hidden>Nothing here yet — add your first task above.</p>
+    </section>
+
+    <article class="side-note" id="board" aria-label="Weekly note">
+      <h2>This Week</h2>
+      <p>Boards reset daily, but momentum carries over. Check back each morning to plan fresh, or scroll your history in a later update.</p>
+      <div class="tag-row">
+        <span class="tag">Deep work</span>
+        <span class="tag">Quick wins</span>
+        <span class="tag">Waiting on others</span>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer" id="about">
+    <p>Built as Project 1 — Responsive Frontend Interface. HTML, CSS &amp; vanilla JavaScript, no frameworks.</p>
+    <p class="footer-meta">&copy; <span id="year"></span> TaskFlow — a DecodeLabs Internship project.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

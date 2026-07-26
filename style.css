@@ -1,0 +1,447 @@
+/* =========================================================
+   TaskFlow — Design Tokens
+   Palette: Mocha Mousse (stability), Ethereal Blue (trust),
+   Moonlit Grey (refinement), plus a deep ink for text.
+   Type: Montserrat (headlines) + Open Sans (body), 3 weights max.
+   ========================================================= */
+
+:root {
+  --mocha: #A5856F;
+  --mocha-dark: #8A6C57;
+  --ethereal-blue: #A0D4E0;
+  --ethereal-blue-dark: #6FB4C4;
+  --moonlit-grey: #F2F0EA;
+  --surface: #FFFFFF;
+  --ink: #3A322C;
+  --ink-soft: #6B6058;
+  --border: #E4DFD5;
+
+  --font-head: 'Montserrat', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+
+  --radius: 14px;
+  --shadow: 0 4px 16px rgba(58, 50, 44, 0.08);
+
+  --space-1: clamp(0.5rem, 0.45rem + 0.25vw, 0.75rem);
+  --space-2: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+  --space-3: clamp(1.5rem, 1.3rem + 1vw, 2.5rem);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--moonlit-grey);
+  font-size: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+  line-height: 1.6;
+}
+
+h1, h2 {
+  font-family: var(--font-head);
+  margin: 0;
+  color: var(--ink);
+}
+
+h1 { font-size: clamp(1.6rem, 1.3rem + 1.5vw, 2.4rem); font-weight: 800; }
+h2 { font-size: clamp(1.1rem, 1rem + 0.6vw, 1.4rem); font-weight: 700; }
+
+p { margin: 0; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--ethereal-blue-dark);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   Header / Nav — Flexbox for the micro layout
+   ========================================================= */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.brand-mark { color: var(--mocha); }
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--ink-soft);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.4rem 0.2rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: var(--ink);
+  border-color: var(--mocha);
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+}
+
+/* =========================================================
+   Main layout — CSS Grid for the macro floor-plan
+   Mobile-first: single column, stacked in reading order.
+   ========================================================= */
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-3);
+}
+
+.sidebar {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-3);
+  order: 2;
+}
+
+.board {
+  order: 1;
+}
+
+.side-note {
+  background: var(--mocha);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  order: 3;
+}
+
+.side-note h2 { color: #fff; }
+.side-note p { color: rgba(255,255,255,0.9); margin-top: var(--space-1); }
+
+/* Tablet: 768px — introduce the two-column shell */
+@media (min-width: 768px) {
+  .layout {
+    grid-template-columns: 220px 1fr;
+    grid-template-areas:
+      "sidebar board"
+      "note    note";
+  }
+  .sidebar { grid-area: sidebar; order: initial; }
+  .board { grid-area: board; order: initial; }
+  .side-note { grid-area: note; order: initial; }
+}
+
+/* Desktop: 1024px — full three-column floor-plan */
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: 240px 1fr 260px;
+    grid-template-areas: "sidebar board note";
+  }
+}
+
+/* =========================================================
+   Sidebar contents
+   ========================================================= */
+
+.progress-ring-wrap {
+  position: relative;
+  width: 120px;
+  margin: 0 auto var(--space-3);
+}
+
+.progress-ring { width: 100%; height: 100%; transform: rotate(-90deg); }
+
+.ring-track {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 10;
+}
+
+.ring-fill {
+  fill: none;
+  stroke: var(--ethereal-blue-dark);
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 326.7;
+  stroke-dashoffset: 326.7;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-text span { font-family: var(--font-head); font-weight: 800; font-size: 1.3rem; }
+.progress-text small { color: var(--ink-soft); font-size: 0.7rem; }
+
+.sidebar-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  margin-bottom: var(--space-1);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.filter-btn {
+  text-align: left;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.55rem 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.filter-btn:hover { border-color: var(--ethereal-blue-dark); }
+
+.filter-btn.active {
+  background: var(--ethereal-blue);
+  border-color: var(--ethereal-blue-dark);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* =========================================================
+   Board — task list
+   ========================================================= */
+
+.board-header { margin-bottom: var(--space-2); }
+
+.subtitle { color: var(--ink-soft); margin-top: 0.3rem; }
+
+.add-task-form {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: var(--space-2);
+}
+
+.add-task-form input {
+  flex: 1;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.add-task-form button {
+  background: var(--mocha);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 1.1rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+
+.add-task-form button:hover { background: var(--mocha-dark); }
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+}
+
+.task-item .task-check {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border: 2px solid var(--ethereal-blue-dark);
+  border-radius: 6px;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.task-item.done .task-check {
+  background: var(--ethereal-blue-dark);
+}
+
+.task-item.done .task-check::after {
+  content: "";
+  position: absolute;
+  left: 5px; top: 1px;
+  width: 5px; height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.task-item .task-text {
+  flex: 1;
+  font-size: 0.95rem;
+}
+
+.task-item.done .task-text {
+  text-decoration: line-through;
+  color: var(--ink-soft);
+}
+
+.task-item .task-remove {
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+}
+
+.task-item .task-remove:hover { color: var(--mocha-dark); }
+
+.empty-state {
+  text-align: center;
+  color: var(--ink-soft);
+  padding: var(--space-3) 0;
+}
+
+/* =========================================================
+   Side note tags — Flexbox micro layout
+   ========================================================= */
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--space-2);
+}
+
+.tag {
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+
+.site-footer {
+  text-align: center;
+  padding: var(--space-3);
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.footer-meta { margin-top: 0.3rem; }
+
+/* =========================================================
+   Mobile nav toggle behaviour (below tablet breakpoint)
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .nav-toggle { display: flex; }
+
+  .main-nav ul {
+    position: absolute;
+    top: 100%;
+    right: var(--space-2);
+    left: var(--space-2);
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: var(--space-2);
+    gap: var(--space-1);
+    display: none;
+  }
+
+  .main-nav.open ul { display: flex; }
+}
+
+/* =========================================================
+   Reduced motion
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; scroll-behavior: auto !important; }
+}
